@@ -12,10 +12,10 @@ public class ProjectConstants {
 	public static final String APLICATIVO_VERSION = "1.0.0";
 	
 	public class Esquema {
-		public static final String SIDENUM = "USRSINAREJ";
+		public static final String SIJ_002 = "USRSINAREJ";
 	}
 	
-	public static final String AUDITORIA_B_INSTER = "I";
+	public static final String AUDITORIA_B_INSTER = "I"; 
 	
 	public static final String ESTADO_ACTIVO = "1";
 	public static final String ESTADO_ACTIVO_S = "S";
