@@ -22,15 +22,15 @@ public class Auditoria implements Serializable {
 	
 	@Column(name="f_aud")
 	private Date fAud;
-	@Column(name="b_ud")
+	@Column(name="b_aud")
 	private String cAud;
-	@Column(name="c_aud_iud")
+	@Column(name="c_aud_uid")
 	private String cAudId;
 	@Column(name="c_aud_uidred")
 	private String cAudIdRed;
 	@Column(name="c_aud_pc")
 	private String cAudPc;
-	@Column(name="c_aud_ip")
+	@Column(name="n_aud_ip")
 	private String cAudIp;
 	@Column(name="c_aud_mcaddr")
 	private String cAudMcAddr;
