@@ -1,7 +1,11 @@
 package pe.gob.pj.depositos.infraestructure.db.entity.sij;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
@@ -10,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pe.gob.pj.depositos.domain.utils.ProjectConstants;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -17,9 +22,14 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "MOV_DEP_REASIGNA_DEPOSITO", schema = ProjectConstants.Esquema.SIJ_002)
-public class MovDepReasignaDeposito {
+public class MovDepReasignaDeposito implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Column(name = "N_MOV_DEP_REA_DEP")
     private Integer nMovDepReaDep;
 
@@ -91,6 +101,15 @@ public class MovDepReasignaDeposito {
 
     @Column(name = "C_AUD_UID")
     private String cAudUid;
+    
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "N_MOV_DEP_DEP_JUD" , insertable = false, updatable = false)
+    private MovDepositoJudicial movDepositoJudicial;
+    
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "N_MOV_DEP_ORDEN_PAGO" , insertable = false, updatable = false )
+    private MovDepOrdenPago movDepOrdenPago;
+    
 
     
 }

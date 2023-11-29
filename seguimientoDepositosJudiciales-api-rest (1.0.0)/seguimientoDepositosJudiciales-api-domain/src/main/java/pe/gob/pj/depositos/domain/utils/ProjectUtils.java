@@ -27,6 +27,8 @@ import java.util.Random;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
+import pe.gob.pj.depositos.domain.model.sij.DepositoEstado;
+
 public class ProjectUtils {
 	
 	public static String obtenerCausaException(Exception e) {
@@ -580,6 +582,25 @@ public class ProjectUtils {
 			codBaseDatos = codDistrito + codInstacia + codEspecialidad;
 		}
 		return codBaseDatos;
+	}
+	
+	public static List<DepositoEstado> crearEstados(String estado){
+		switch (estado) {
+		case ProjectConstants.ESTADO_DJ_D:
+			
+			break;
+		case ProjectConstants.ESTADO_DJ_P:
+			
+			break;
+		case ProjectConstants.ESTADO_DJ_C:
+			
+			break;
+		
+		default:
+			break;
+		}
+		return new ArrayList<DepositoEstado>();
+		
 	}
 
 	public static String isNull(Object val) {

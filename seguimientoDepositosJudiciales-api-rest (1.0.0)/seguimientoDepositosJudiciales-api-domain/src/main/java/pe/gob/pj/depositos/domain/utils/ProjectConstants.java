@@ -12,13 +12,19 @@ public class ProjectConstants {
 	public static final String APLICATIVO_VERSION = "1.0.0";
 	
 	public class Esquema {
-		public static final String SIJ_002 = "USRSINAREJ";
+		public static final String SIJ_002 = "\"USRSINAREJ\"";
 	}
 	
 	public static final String AUDITORIA_B_INSTER = "I"; 
 	
 	public static final String ESTADO_ACTIVO = "1";
 	public static final String ESTADO_ACTIVO_S = "S";
+	public static final String ESTADO_DJ_PENDIENTE = "Pendiente";
+	public static final String ESTADO_DJ_COBRADO = "Cobrado";
+	public static final String ESTADO_DJ_C = "C";
+	public static final String ESTADO_DJ_D = "D";
+	public static final String ESTADO_DJ_P = "P";
+	public static final String ESTADO_DJ_Q = "Q";
 	
 	public static final String PATTERN_NUMBER = "\\d+";
 	public static final String PATTERN_ALPHANUMBER = "[a-zA-Z0-9]+";
@@ -104,7 +110,7 @@ public class ProjectConstants {
 	
 	public class Proceso {
 		public static final String CONSULTA_PERSONA_RENIEC = "Consultar Persona En Reniec";
-		public static final String CONSULTA_EXPEDIENTES = "Consultar Expedientes";
+		public static final String CONSULTA_DEPOSITO_JUDICIAL = "Consultar Deposito Judicial";
 		public static final String CONSULTA_EXPEDIENTE_DETALLE = "Consultar Detalle Expediente";
 		public static final String CONSULTA_EXPEDIENTE_RESOLUCION = "Consultar Resolución Expediente";
 	}

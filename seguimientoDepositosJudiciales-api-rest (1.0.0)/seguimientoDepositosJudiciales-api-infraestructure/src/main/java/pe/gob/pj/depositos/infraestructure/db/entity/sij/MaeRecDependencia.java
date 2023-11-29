@@ -2,22 +2,30 @@ package pe.gob.pj.depositos.infraestructure.db.entity.sij;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import pe.gob.pj.depositos.domain.utils.ProjectConstants;
+import lombok.EqualsAndHashCode;
 
-@NoArgsConstructor
-@AllArgsConstructor
+import pe.gob.pj.depositos.domain.utils.ProjectConstants;
+import pe.gob.pj.depositos.infraestructure.db.entity.Auditoria;
+
+@EqualsAndHashCode(callSuper=false)
 @Data
 @Entity
 @Table(name = "MAE_REC_DEPENDENCIA", schema = ProjectConstants.Esquema.SIJ_002)
-public class MaeRecDependencia {
+public class MaeRecDependencia extends Auditoria implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Column(name = "c_dependencia")
     private String cDependencia;
 
@@ -60,8 +68,6 @@ public class MaeRecDependencia {
     @Column(name = "c_eq_instancia")
     private String cEqInstancia;
 
-    // Getters y setters
-
-    // Puedes agregar más campos y métodos según sea necesario
+   
 }
 

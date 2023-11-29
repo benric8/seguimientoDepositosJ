@@ -4,13 +4,29 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Table;
-import java.util.Date;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import pe.gob.pj.depositos.domain.utils.ProjectConstants;
+import pe.gob.pj.depositos.infraestructure.db.entity.Auditoria;
+
+import java.io.Serializable;
+
+
+
+
+@EqualsAndHashCode(callSuper =  false)
+@Data
 @Entity
-@Table(name = "MAE_DISTRITO_JUDICIAL")
-public class MaeDistritoJudicial {
+@Table(name = "MAE_DISTRITO_JUDICIAL", schema = ProjectConstants.Esquema.SIJ_002)
+public class MaeDistritoJudicial extends Auditoria implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Column(name = "c_distritoj")
     private String cDistritoJ;
 
@@ -20,29 +36,5 @@ public class MaeDistritoJudicial {
     @Column(name = "l_estado")
     private Boolean lEstado;
 
-    @Column(name = "f_aud")
-    private Date fAud;
-
-    @Column(name = "b_aud")
-    private Boolean bAud;
-
-    @Column(name = "c_aud_uid")
-    private String cAudUid;
-
-    @Column(name = "c_aud_uidred")
-    private String cAudUidRed;
-
-    @Column(name = "c_aud_pc")
-    private String cAudPc;
-
-    @Column(name = "n_aud_ip")
-    private String nAudIp;
-
-    @Column(name = "c_aud_mcaddr")
-    private String cAudMcAddr;
-
-    // Getters y setters
-
-    // Puedes agregar más campos y métodos según sea necesario
 }
 
