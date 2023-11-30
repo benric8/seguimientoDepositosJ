@@ -1,6 +1,7 @@
 package pe.gob.pj.depositos.infraestructure.db.repository.adapter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,11 +49,11 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 		log.info("{} INICIO CONSULTA DEPOSITOS", cuo);
 		log.info("{} NUMERO EXPEDIENTE", numeroExpediente);
 		try {
-			StringBuilder stringQuery = new StringBuilder("SELECT mdj FROM MovDepositoJudicial mdj ");
-			stringQuery.append("JOIN mdj.ordenesPago op ");
-			stringQuery.append("where mdj.xNumExp=: "+MovDepositoJudicial.DJ_EXPEDIENTE);
-			stringQuery.append("AND op.cEstado != 'X'");
-			stringQuery.append("ORDER BY mdj.fRegistro DESC");
+			StringBuilder stringQuery = new StringBuilder("SELECT mdj FROM MovDepositoJudicial mdj");
+			stringQuery.append(" JOIN mdj.ordenesPago op");
+			stringQuery.append(" where mdj.xNumExp=: "+MovDepositoJudicial.DJ_EXPEDIENTE);
+			stringQuery.append(" AND op.cEstado != 'X'");
+			stringQuery.append(" ORDER BY mdj.fRegistro DESC");
 			
 			DepositoJudicialDetalle depositoJudicialDetalle = new DepositoJudicialDetalle();
 			List<DepositoEstado> depositosEstado = new ArrayList<DepositoEstado>();
@@ -68,14 +69,24 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 					if(!depositoJudicial.getOrdenesPago().isEmpty()) {
 						depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,depositoJudicialDetalle.getFechaRegistro(),"A","1"));
 						depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ),"A","1"));
-						if(depositoJudicial.getOrdenesPago().size()==1 && depositoJudicial.getOrdenesPago().get(0).getCEstado()=="C") {
-							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,ProjectUtils.convertDateToString(depositoJudicial.getOrdenesPago().get(0).getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS),"A","1"));
+						log.info("{} tamaño del as ordees",depositoJudicial.getOrdenesPago().size());
+						log.info("{} estado de la orden",depositoJudicial.getOrdenesPago().get(0).getCEstado());
+						log.info("{} estado de la orden",depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C));
+						if(depositoJudicial.getOrdenesPago().size()==1) {
+							if(depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
+								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,ProjectUtils.convertDateToString(depositoJudicial.getOrdenesPago().get(0).getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS),"A","1"));								
+							}else if (depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_F)) {
+								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+							}
 						}else {
+							BigDecimal montoCobrado = new BigDecimal("0");
 							depositoJudicial.getOrdenesPago().stream().forEach(ordenPago->{
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_Q,ProjectConstants.DESCRIPCION_ESTADO_DJ_Q,ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS),"B","1"));
+							
 							});
 							Collections.sort(depositosEstado,Comparator.comparing(DepositoEstado::getFechaOperacion));
-							if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_C) {
+							if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_C) {//puede haber depositos con estado P que ya se han cobrado completamente verificar el monto cobrado para determinar
+								//estado F de la orden de pago y deposito judicial en P . F es cuando el juez le entrega la orden de pago a la parte
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,depositosEstado.get(depositosEstado.size()-1).getFechaOperacion(),"A","1"));
 							}else{
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));

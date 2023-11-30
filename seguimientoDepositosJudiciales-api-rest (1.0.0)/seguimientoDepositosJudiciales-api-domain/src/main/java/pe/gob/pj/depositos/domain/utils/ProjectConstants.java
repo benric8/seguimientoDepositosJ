@@ -26,6 +26,10 @@ public class ProjectConstants {
 	public static final String ESTADO_DJ_P = "P";
 	public static final String ESTADO_DJ_Q = "Q";
 	
+	public static final String ESTADO_OP_X = "X";
+	public static final String ESTADO_OP_C = "C";
+	public static final String ESTADO_OP_F = "F";
+
 	public static final String DESCRIPCION_ESTADO_DJ_C = "Deposito cobrado por completo";
 	public static final String DESCRIPCION_ESTADO_DJ_D = "Depositado en banco";
 	public static final String DESCRIPCION_ESTADO_DJ_P = "Presentado por mesa de partes";
