@@ -26,6 +26,11 @@ public class ProjectConstants {
 	public static final String ESTADO_DJ_P = "P";
 	public static final String ESTADO_DJ_Q = "Q";
 	
+	public static final String DESCRIPCION_ESTADO_DJ_C = "Deposito cobrado por completo";
+	public static final String DESCRIPCION_ESTADO_DJ_D = "Depositado en banco";
+	public static final String DESCRIPCION_ESTADO_DJ_P = "Presentado por mesa de partes";
+	public static final String DESCRIPCION_ESTADO_DJ_Q = "Deposito cobrado parcialmente";
+	
 	public static final String PATTERN_NUMBER = "\\d+";
 	public static final String PATTERN_ALPHANUMBER = "[a-zA-Z0-9]+";
 	public static final String PATTERN_S_N = "[SN]";

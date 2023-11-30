@@ -680,6 +680,15 @@ public class ProjectUtils {
 		return ip;
 	}
 
+	public static List<DepositoEstado> crearEstadosD(String fechaRegistro){
+		List<DepositoEstado> estados = new ArrayList<DepositoEstado>();
+		estados.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,fechaRegistro,"A","1"));
+		estados.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,null,"A","0"));
+		estados.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+		
+		return estados;
+	} 
+	
 	public static String getMac() {
 		String firstInterface = null;
 		Map<String, String> addressByNetwork = new HashMap<>();
