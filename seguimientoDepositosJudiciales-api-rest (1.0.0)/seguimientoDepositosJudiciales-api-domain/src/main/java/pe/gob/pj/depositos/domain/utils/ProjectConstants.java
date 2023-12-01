@@ -21,10 +21,13 @@ public class ProjectConstants {
 	public static final String ESTADO_ACTIVO_S = "S";
 	public static final String ESTADO_DJ_PENDIENTE = "Pendiente";
 	public static final String ESTADO_DJ_COBRADO = "Cobrado";
+	public static final String ESTADO_DJ_EXTORNADO = "Extornado";
+	
 	public static final String ESTADO_DJ_C = "C";
 	public static final String ESTADO_DJ_D = "D";
 	public static final String ESTADO_DJ_P = "P";
 	public static final String ESTADO_DJ_Q = "Q";
+	public static final String ESTADO_DJ_E = "E";
 	
 	public static final String ESTADO_OP_X = "X";
 	public static final String ESTADO_OP_C = "C";
@@ -34,6 +37,7 @@ public class ProjectConstants {
 	public static final String DESCRIPCION_ESTADO_DJ_D = "Depositado en banco";
 	public static final String DESCRIPCION_ESTADO_DJ_P = "Presentado por mesa de partes";
 	public static final String DESCRIPCION_ESTADO_DJ_Q = "Deposito cobrado parcialmente";
+	public static final String DESCRIPCION_ESTADO_DJ_E = "Deposito Extornado";
 	
 	public static final String PATTERN_NUMBER = "\\d+";
 	public static final String PATTERN_ALPHANUMBER = "[a-zA-Z0-9]+";

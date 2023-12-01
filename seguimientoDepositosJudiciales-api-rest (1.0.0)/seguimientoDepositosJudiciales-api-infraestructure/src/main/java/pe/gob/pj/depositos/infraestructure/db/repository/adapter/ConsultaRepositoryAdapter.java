@@ -47,10 +47,9 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 		List<DepositoJudicialDetalle> depositoJudicialDetalles = new ArrayList<DepositoJudicialDetalle>();
 		
 		log.info("{} INICIO CONSULTA DEPOSITOS", cuo);
-		log.info("{} NUMERO EXPEDIENTE", numeroExpediente);
 		try {
 			StringBuilder stringQuery = new StringBuilder("SELECT mdj FROM MovDepositoJudicial mdj");
-			stringQuery.append(" JOIN mdj.ordenesPago op");
+			stringQuery.append(" LEFT JOIN mdj.ordenesPago op");
 			stringQuery.append(" where mdj.xNumExp=: "+MovDepositoJudicial.DJ_EXPEDIENTE);
 			stringQuery.append(" AND op.cEstado != 'X'");
 			stringQuery.append(" ORDER BY mdj.fRegistro DESC");
@@ -64,14 +63,12 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 				
 				if(depositoJudicial!=null && depositoJudicial.getXNumExp() != null ) {
 					depositoJudicialDetalle.setCodigoDeposito(depositoJudicial.getCDepositoJ());
-					depositoJudicialDetalle.setEstado(depositoJudicial.getCEstado()!=ProjectConstants.ESTADO_DJ_C?ProjectConstants.ESTADO_DJ_PENDIENTE:ProjectConstants.ESTADO_DJ_COBRADO);
+					depositoJudicialDetalle.setEstado(ProjectUtils.obtenerEstadoActual(depositoJudicial.getCEstado()));
 					depositoJudicialDetalle.setFechaRegistro(ProjectUtils.convertDateToString(depositoJudicial.getFRegistro(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS));
 					if(!depositoJudicial.getOrdenesPago().isEmpty()) {
 						depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,depositoJudicialDetalle.getFechaRegistro(),"A","1"));
 						depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ),"A","1"));
-						log.info("{} tamaño del as ordees",depositoJudicial.getOrdenesPago().size());
-						log.info("{} estado de la orden",depositoJudicial.getOrdenesPago().get(0).getCEstado());
-						log.info("{} estado de la orden",depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C));
+						
 						if(depositoJudicial.getOrdenesPago().size()==1) {
 							if(depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,ProjectUtils.convertDateToString(depositoJudicial.getOrdenesPago().get(0).getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS),"A","1"));								
@@ -79,14 +76,13 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
 							}
 						}else {
-							BigDecimal montoCobrado = new BigDecimal("0");
 							depositoJudicial.getOrdenesPago().stream().forEach(ordenPago->{
-								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_Q,ProjectConstants.DESCRIPCION_ESTADO_DJ_Q,ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS),"B","1"));
-							
+								if(ordenPago.getCEstado()!=ProjectConstants.ESTADO_OP_X) {
+									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_Q,ProjectConstants.DESCRIPCION_ESTADO_DJ_Q,ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS),"B","1"));
+								}
 							});
 							Collections.sort(depositosEstado,Comparator.comparing(DepositoEstado::getFechaOperacion));
-							if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_C) {//puede haber depositos con estado P que ya se han cobrado completamente verificar el monto cobrado para determinar
-								//estado F de la orden de pago y deposito judicial en P . F es cuando el juez le entrega la orden de pago a la parte
+							if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_C) {
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,depositosEstado.get(depositosEstado.size()-1).getFechaOperacion(),"A","1"));
 							}else{
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
@@ -95,7 +91,21 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 						
 						depositoJudicialDetalle.setDeppositoEstados(depositosEstado);
 					}else {
-						depositoJudicialDetalle.setDeppositoEstados(ProjectUtils.crearEstadosD(depositoJudicialDetalle.getFechaRegistro()));
+						if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_D) {
+							depositoJudicialDetalle.setDeppositoEstados(ProjectUtils.crearEstadosD(depositoJudicialDetalle.getFechaRegistro()));							
+						}else if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_E){
+							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,depositoJudicialDetalle.getFechaRegistro(),"A","1"));
+							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,depositoJudicial.getFPresentacion()!=null?ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ):null,"A",depositoJudicial.getFPresentacion()!=null?"1":"0"));
+							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_E,ProjectConstants.DESCRIPCION_ESTADO_DJ_E,ProjectUtils.convertDateToString(depositoJudicial.getFExtornoBn(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ),"B","1"));
+							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+							depositoJudicialDetalle.setDeppositoEstados(depositosEstado);													
+						}else {
+							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,depositoJudicialDetalle.getFechaRegistro(),"A","1"));
+							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ),"A","1"));
+							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+							depositoJudicialDetalle.setDeppositoEstados(depositosEstado);
+							
+						}
 					}
 				}
 			});

@@ -689,6 +689,24 @@ public class ProjectUtils {
 		return estados;
 	} 
 	
+	public static String obtenerEstadoActual(String codigoEstado){
+		switch (codigoEstado) {
+		case ProjectConstants.ESTADO_DJ_P:
+			return ProjectConstants.DESCRIPCION_ESTADO_DJ_P;
+			
+		case ProjectConstants.ESTADO_DJ_C:
+			return ProjectConstants.DESCRIPCION_ESTADO_DJ_C;
+			
+		case ProjectConstants.ESTADO_DJ_E:
+			return ProjectConstants.DESCRIPCION_ESTADO_DJ_E;
+	
+		default:
+			return ProjectConstants.DESCRIPCION_ESTADO_DJ_D;
+			
+		}
+		
+	}
+	
 	public static String getMac() {
 		String firstInterface = null;
 		Map<String, String> addressByNetwork = new HashMap<>();
