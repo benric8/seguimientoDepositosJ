@@ -22,7 +22,7 @@
 *.zip
 *.tar.gz
 *.rar
-*/target
+
 target/*
 .classpath
 .settings
