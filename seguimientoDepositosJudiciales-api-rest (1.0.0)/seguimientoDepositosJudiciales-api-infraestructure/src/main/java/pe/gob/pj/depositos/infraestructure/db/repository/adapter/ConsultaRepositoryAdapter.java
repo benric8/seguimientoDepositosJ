@@ -1,7 +1,6 @@
 package pe.gob.pj.depositos.infraestructure.db.repository.adapter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,12 +20,11 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 import pe.gob.pj.depositos.domain.exceptions.ErrorDaoException;
 import pe.gob.pj.depositos.domain.model.sij.DepositoEstado;
-//import pe.gob.pj.depositos.domain.model.sij.DepositoEstado;
 import pe.gob.pj.depositos.domain.model.sij.DepositoJudicialDetalle;
 import pe.gob.pj.depositos.domain.port.repository.ConsultaRepositoryPort;
 import pe.gob.pj.depositos.domain.utils.ProjectConstants;
 import pe.gob.pj.depositos.domain.utils.ProjectUtils;
-import pe.gob.pj.depositos.infraestructure.db.entity.sij.MovDepOrdenPago;
+
 import pe.gob.pj.depositos.infraestructure.db.entity.sij.MovDepositoJudicial;
 
 @Slf4j
@@ -89,28 +87,29 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 							}
 						}
 						
-						depositoJudicialDetalle.setDeppositoEstados(depositosEstado);
+						depositoJudicialDetalle.setDepositoEstados(depositosEstado);
 					}else {
 						if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_D) {
-							depositoJudicialDetalle.setDeppositoEstados(ProjectUtils.crearEstadosD(depositoJudicialDetalle.getFechaRegistro()));							
+							depositoJudicialDetalle.setDepositoEstados(ProjectUtils.crearEstadosD(depositoJudicialDetalle.getFechaRegistro()));							
 						}else if(depositoJudicial.getCEstado()==ProjectConstants.ESTADO_DJ_E){
 							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,depositoJudicialDetalle.getFechaRegistro(),"A","1"));
 							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,depositoJudicial.getFPresentacion()!=null?ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ):null,"A",depositoJudicial.getFPresentacion()!=null?"1":"0"));
 							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_E,ProjectConstants.DESCRIPCION_ESTADO_DJ_E,ProjectUtils.convertDateToString(depositoJudicial.getFExtornoBn(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ),"B","1"));
 							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
-							depositoJudicialDetalle.setDeppositoEstados(depositosEstado);													
+							depositoJudicialDetalle.setDepositoEstados(depositosEstado);													
 						}else {
 							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,depositoJudicialDetalle.getFechaRegistro(),"A","1"));
 							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS ),"A","1"));
 							depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
-							depositoJudicialDetalle.setDeppositoEstados(depositosEstado);
+							depositoJudicialDetalle.setDepositoEstados(depositosEstado);
 							
 						}
 					}
+					
+					depositoJudicialDetalles.add(depositoJudicialDetalle);
+					log.info("{} Datos de deposito cargados.", cuo);
 				}
 			});
-			depositoJudicialDetalles.add(depositoJudicialDetalle);
-			log.info("{} Datos de deposito cargados.", cuo);
 		} catch (SQLGrammarException | IllegalArgumentException | ConstraintViolationException | DataIntegrityViolationException e) {
 			throw new ErrorDaoException(ProjectConstants.C_ERROR_EJECUCION_SENTENCIA, 
 					ProjectConstants.X_ERROR+ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL+ProjectConstants.X_ERROR_EJECUCION_SENTENCIA, 

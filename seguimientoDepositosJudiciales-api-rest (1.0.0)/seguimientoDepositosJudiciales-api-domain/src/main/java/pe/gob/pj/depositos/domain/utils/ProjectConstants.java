@@ -91,10 +91,10 @@ public class ProjectConstants {
 	public static final String C_ERROR_VALIDAR_TOKEN = "E002";
 	public static final String C_ERROR_REFRESH_TOKEN = "E003";
 	public static final String C_ERROR_EJECUCION_SENTENCIA = "E004";
-	public static final String C_ERROR_VALIDAR_PERSONA_RENIEC= "E005";
-	public static final String C_ERROR_EXPEDIENTE_DETALLE= "E006";
-	public static final String C_ERROR_EXPEDIENTE_RESOLUCION= "E007";
 	public static final String C_ERROR_CAPTCHA= "E008";
+// 	public static final String C_ERROR_VALIDAR_PERSONA_RENIEC= "E005";
+// 	public static final String C_ERROR_EXPEDIENTE_DETALLE= "E006";
+// 	public static final String C_ERROR_EXPEDIENTE_RESOLUCION= "E007";
 //	public static final String C_ERROR_EJECUCION_SP   = "E004";
 //	public static final String C_ERROR_PJ_SEGURIDAD   = "E005";
 //	public static final String C_ERROR_OBTENER_CONFIGURACION_CORTE = "E006";
@@ -110,10 +110,10 @@ public class ProjectConstants {
 	public static final String X_ERROR_REFRESH_TOKEN = "Error al generar un nuevo token, el tiempo límite para refrescar el token enviado a expirado.";
 	public static final String X_ERROR  = "Error al ";
 	public static final String X_ERROR_EJECUCION_SENTENCIA  = " - Error al ejecutar sentencia JPA. ";
-	public static final String X_ERROR_VALIDAR_PERSONA_RENIEC  = " - Los datos ingresados de la persona no se pudieron contrastar con RENIEC. ";
-	public static final String X_ERROR_EXPEDIENTE_DETALLE  = " - El expediente no cuenta con resolución en la base de datos centralizada.";
-	public static final String X_ERROR_EXPEDIENTE_RESOLUCION  = " - No se pudo obtener la resolución del expediente de CASILLERO.";
 	public static final String X_ERROR_CAPTCHA  = " - Se indica que se valide el captcha y el token captcha es nulo o no se pudo validar correctamente el captcha.";
+//	public static final String X_ERROR_VALIDAR_PERSONA_RENIEC  = " - Los datos ingresados de la persona no se pudieron contrastar con RENIEC. ";
+//	public static final String X_ERROR_EXPEDIENTE_DETALLE  = " - El expediente no cuenta con resolución en la base de datos centralizada.";
+//	public static final String X_ERROR_EXPEDIENTE_RESOLUCION  = " - No se pudo obtener la resolución del expediente de CASILLERO.";
 //	public static final String X_ERROR_PJ_SEGURIDAD   = "No se estableció conexión con la BD PJ Seguridad.";
 //	public static final String X_ERROR_OBTENER_CONFIGURACION_CORTE   = "No se puede obtener datos de configuración de la BD: ";
 //	public static final String X_ERROR_EJECUCION_SP   = " - Problemas en la ejecución del SP: ";

@@ -17,5 +17,5 @@ public class DepositoJudicialDetalle implements Serializable {
 	 private String codigoDeposito;
 	 private String estado;
 	 private String fechaRegistro;
-	 private List<DepositoEstado> deppositoEstados;
+	 private List<DepositoEstado> depositoEstados;
 }
