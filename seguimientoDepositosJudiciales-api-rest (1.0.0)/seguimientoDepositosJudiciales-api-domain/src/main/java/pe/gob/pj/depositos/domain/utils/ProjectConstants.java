@@ -54,7 +54,8 @@ public class ProjectConstants {
 	public static final String FORMATO_FECHA_YYYY_MM_DD = "yyyy/MM/dd";
 	public static final String FORMATO_FECHA_YYYY_MM_DD_ = "yyyy-MM-dd";
 	public static final String FORMATO_FECHA_DD_MM_YYYY = "dd/MM/yyyy";
-	public static final String FORMATO_FECHA_DD_MM_YYYY_HH_MM = "dd/MM/yyyy hh:mm a";
+	public static final String FORMATO_FECHA_DD_MM_YYYY_HH_MM_AMPM = "dd/MM/yyyy hh:mm a";
+	public static final String FORMATO_FECHA_DD_MM_YYYY_HH_MM = "dd/MM/yyyy HH:mm";
 	public static final String FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS = "dd/MM/yyyy hh:mm:ss";
 	public static final String FORMATO_FECHA_DD_MM_YYYY_HH_MM_SS_SSS="dd/MM/yyyy HH:mm:ss.SSS";
 	public static final String FORMATO_FECHA_YYYY_MM_DD_HH_MM_SS_SSS="yyyy-MM-dd HH:mm:ss.SSS";
