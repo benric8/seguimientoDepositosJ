@@ -62,7 +62,7 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 					log.info( "{} obteniendo datos de deposito..", cuo);
 					depositoJudicialDetalle.setCodigoDeposito(depositoJudicial.getCDepositoJ());
 					log.info( "{} Codigo de Deposito {}", cuo,depositoJudicialDetalle.getCodigoDeposito());
-					depositoJudicialDetalle.setEstado(ProjectUtils.obtenerEstadoActual(depositoJudicial.getCEstado()));
+					depositoJudicialDetalle.setEstado(ProjectUtils.obtenerEstadoActual(depositoJudicial.getCEstado(),depositoJudicial.getNSaldo()));
 					log.info( "{} Estado de Deposito {}", cuo,depositoJudicialDetalle.getEstado());
 					depositoJudicialDetalle.setFechaRegistro(ProjectUtils.convertDateToString(depositoJudicial.getFRegistro(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
 					log.info( "{} Fecha de Deposito {}", cuo,depositoJudicialDetalle.getFechaRegistro());
@@ -72,11 +72,20 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 						depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_D,ProjectConstants.DESCRIPCION_ESTADO_DJ_D,depositoJudicialDetalle.getFechaRegistro(),"A","1"));
 						depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM ),"A","1"));
 						
-						if(depositoJudicial.getOrdenesPago().size()==1) {
-							if(depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
-								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,ProjectUtils.convertDateToString(depositoJudicial.getOrdenesPago().get(0).getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM),"A","1"));								
-							}else if (depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_F)) {
-								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+						if(depositoJudicial.getOrdenesPago().size()==1 ) {
+							if(depositoJudicial.getNSaldo()==0) {
+								if(depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
+									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,ProjectUtils.convertDateToString(depositoJudicial.getOrdenesPago().get(0).getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM),"A","1"));								
+								}else if (depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_F)) {
+									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+								}
+							}else {
+								if(depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
+									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_Q,ProjectConstants.DESCRIPCION_ESTADO_DJ_Q,ProjectUtils.convertDateToString(depositoJudicial.getOrdenesPago().get(0).getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM),"B","1"));
+									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+								}else if (depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_F)) {
+									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,null,"A","0"));
+								}
 							}
 						}else {
 							depositoJudicial.getOrdenesPago().stream().forEach(ordenPago->{

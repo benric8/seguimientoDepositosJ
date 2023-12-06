@@ -19,9 +19,9 @@ public class ProjectConstants {
 	
 	public static final String ESTADO_ACTIVO = "1";
 	public static final String ESTADO_ACTIVO_S = "S";
-	public static final String ESTADO_DJ_PENDIENTE = "Pendiente";
-	public static final String ESTADO_DJ_COBRADO = "Cobrado";
-	public static final String ESTADO_DJ_EXTORNADO = "Extornado";
+	public static final String ESTADO_DJ_PENDIENTE = "P";
+	public static final String ESTADO_DJ_COMPLETO = "C";
+	
 	
 	public static final String ESTADO_DJ_C = "C";
 	public static final String ESTADO_DJ_D = "D";
