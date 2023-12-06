@@ -91,7 +91,7 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 						}else {
 							log.info("validamos las ordenes de pago ");
 							depositoJudicial.getOrdenesPago().stream().forEach(ordenPago->{
-								if(ordenPago.getCEstado().equals(ProjectConstants.ESTADO_DJ_C)) {
+								if(ordenPago.getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
 									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_Q,ProjectConstants.DESCRIPCION_ESTADO_DJ_Q,ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM),"B","1"));
 								}
 							});
