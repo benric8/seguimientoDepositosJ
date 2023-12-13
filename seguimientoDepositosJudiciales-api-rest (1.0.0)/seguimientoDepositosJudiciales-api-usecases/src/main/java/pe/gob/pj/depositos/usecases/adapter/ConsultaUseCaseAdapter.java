@@ -31,7 +31,7 @@ public class ConsultaUseCaseAdapter implements ConsultaUseCasePort, Serializable
 	public List<DepositoJudicialDetalle> consultarDepositos(String cuo, String numeroExpediente) throws Exception {
 		log.info("{} INICIO_SERVICE CONSULTA DEPOSITOS", cuo);
 		List<DepositoJudicialDetalle> lista = repo.consultarDepositos(cuo, numeroExpediente);
-		log.info("{} FIN_SERVICE CONSULTA EXPEDIENTES", cuo);
+		log.info("{} FIN_SERVICE CONSULTA DEPOSITOS", cuo);
 		return lista;
 	}
 	

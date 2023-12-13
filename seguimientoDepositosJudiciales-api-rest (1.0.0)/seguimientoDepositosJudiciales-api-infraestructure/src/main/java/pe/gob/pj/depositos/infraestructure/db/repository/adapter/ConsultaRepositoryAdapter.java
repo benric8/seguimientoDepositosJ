@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.TypedQuery;
 import javax.validation.ConstraintViolationException;
@@ -24,7 +25,7 @@ import pe.gob.pj.depositos.domain.model.sij.DepositoJudicialDetalle;
 import pe.gob.pj.depositos.domain.port.repository.ConsultaRepositoryPort;
 import pe.gob.pj.depositos.domain.utils.ProjectConstants;
 import pe.gob.pj.depositos.domain.utils.ProjectUtils;
-
+import pe.gob.pj.depositos.infraestructure.db.entity.sij.MovDepOrdenPago;
 import pe.gob.pj.depositos.infraestructure.db.entity.sij.MovDepositoJudicial;
 
 @Slf4j
@@ -49,7 +50,6 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 			StringBuilder stringQuery = new StringBuilder("SELECT DISTINCT mdj FROM MovDepositoJudicial mdj");
 			stringQuery.append(" LEFT JOIN mdj.ordenesPago op");
 			stringQuery.append(" where mdj.xNumExp=: "+MovDepositoJudicial.DJ_EXPEDIENTE);
-			//stringQuery.append(" AND op.cEstado != 'X'");
 			stringQuery.append(" ORDER BY mdj.fRegistro DESC");
 			
 			TypedQuery<MovDepositoJudicial> query = this.sfSij.getCurrentSession().createQuery(stringQuery.toString(),MovDepositoJudicial.class);
@@ -59,7 +59,7 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 				
 				if(depositoJudicial!=null && depositoJudicial.getXNumExp() != null ) {
 					DepositoJudicialDetalle depositoJudicialDetalle = new DepositoJudicialDetalle();
-					log.info( "{} obteniendo datos de deposito..", cuo);
+					
 					depositoJudicialDetalle.setCodigoDeposito(depositoJudicial.getCDepositoJ());
 					log.info( "{} Codigo de Deposito {}", cuo,depositoJudicialDetalle.getCodigoDeposito());
 					depositoJudicialDetalle.setEstado(ProjectUtils.obtenerEstadoActual(depositoJudicial.getCEstado(),depositoJudicial.getNSaldo()));
@@ -73,7 +73,7 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 						depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_P,ProjectConstants.DESCRIPCION_ESTADO_DJ_P,ProjectUtils.convertDateToString(depositoJudicial.getFPresentacion(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM ),"A","1"));
 						
 						if(depositoJudicial.getOrdenesPago().size()==1) {
-							log.info("validamos una sola orden de pago ");
+							log.info("VALIDAMOS UNA SOLA ORDEN DE PAGO ");
 							if(depositoJudicial.getNSaldo()==0) {
 								if(depositoJudicial.getOrdenesPago().get(0).getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
 									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,ProjectUtils.convertDateToString(depositoJudicial.getOrdenesPago().get(0).getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM),"A","1"));								
@@ -89,13 +89,17 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 								}
 							}
 						}else {
-							log.info("validamos las ordenes de pago ");
-							depositoJudicial.getOrdenesPago().stream().forEach(ordenPago->{
-								if(ordenPago.getCEstado().equals(ProjectConstants.ESTADO_OP_C)) {
-									depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_Q,ProjectConstants.DESCRIPCION_ESTADO_DJ_Q,ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM),"B","1"));
-								}
-							});
-							Collections.sort(depositosEstado,Comparator.comparing(DepositoEstado::getFechaOperacion));
+							log.info("VALIDAMOS LAS ORDENES DE PAGO {}",depositoJudicial.getOrdenesPago().size() );
+							log.info("FILTRAMOS LAS ORDENES DE PAGO LOS ESTADOS SOLO COBRADOS ");
+							List<MovDepOrdenPago> ordenesPagoCobradas = depositoJudicial.getOrdenesPago().stream().filter(ordenPago->ordenPago.getCEstado().equals(ProjectConstants.ESTADO_OP_C)).collect(Collectors.toList());;
+							log.info("ORDENAMOS LAS ORDENES DE PAGO");
+							Collections.sort(ordenesPagoCobradas,Comparator.comparing(MovDepOrdenPago::getFCobroBn));
+							log.info("AGREGAMOS LAS ORDENES COMO ESTADOS DE DEPOSITO");
+							ordenesPagoCobradas.stream().forEach(ordenPago->depositosEstado.add(new
+							 DepositoEstado(ProjectConstants.ESTADO_DJ_Q,ProjectConstants.
+							 DESCRIPCION_ESTADO_DJ_Q,ProjectUtils.convertDateToString(ordenPago.
+							 getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM),"B","1")));
+	
 							if(depositoJudicial.getCEstado().equals(ProjectConstants.ESTADO_DJ_C)) {
 								depositosEstado.add(new DepositoEstado(ProjectConstants.ESTADO_DJ_C,ProjectConstants.DESCRIPCION_ESTADO_DJ_C,depositosEstado.get(depositosEstado.size()-1).getFechaOperacion(),"A","1"));
 							}else{
