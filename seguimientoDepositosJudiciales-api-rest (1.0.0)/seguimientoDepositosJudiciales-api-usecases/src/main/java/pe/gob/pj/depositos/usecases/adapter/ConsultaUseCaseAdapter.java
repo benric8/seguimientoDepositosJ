@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
+import pe.gob.pj.depositos.domain.model.sij.DepositoJudicial;
 import pe.gob.pj.depositos.domain.model.sij.DepositoJudicialDetalle;
 import pe.gob.pj.depositos.domain.port.repository.ConsultaRepositoryPort;
 import pe.gob.pj.depositos.domain.port.usecase.ConsultaUseCasePort;
@@ -31,6 +32,15 @@ public class ConsultaUseCaseAdapter implements ConsultaUseCasePort, Serializable
 	public List<DepositoJudicialDetalle> consultarDepositos(String cuo, String numeroExpediente) throws Exception {
 		log.info("{} INICIO_SERVICE CONSULTA DEPOSITOS", cuo);
 		List<DepositoJudicialDetalle> lista = repo.consultarDepositos(cuo, numeroExpediente);
+		log.info("{} FIN_SERVICE CONSULTA DEPOSITOS", cuo);
+		return lista;
+	}
+	
+	@Override
+	@Transactional(transactionManager = "txManagerSij", propagation = Propagation.REQUIRES_NEW, readOnly = true, rollbackFor = { Exception.class, SQLException.class})
+	public List<DepositoJudicial> consultarDeposito(String cuo, String numeroExpediente) throws Exception {
+		log.info("{} INICIO_SERVICE CONSULTA DEPOSITOS", cuo);
+		List<DepositoJudicial> lista = repo.consultarDeposito(cuo, numeroExpediente);
 		log.info("{} FIN_SERVICE CONSULTA DEPOSITOS", cuo);
 		return lista;
 	}

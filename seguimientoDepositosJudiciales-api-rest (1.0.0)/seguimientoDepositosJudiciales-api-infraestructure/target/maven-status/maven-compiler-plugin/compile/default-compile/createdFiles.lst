@@ -20,12 +20,14 @@ pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeControlSecuencia.class
 pe\gob\pj\depositos\infraestructure\db\entity\security\MaeCliente.class
 pe\gob\pj\depositos\infraestructure\security\adapter\UserDetailsServiceAdapter.class
 pe\gob\pj\depositos\infraestructure\db\entity\security\MaeRol.class
+pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecMotivoDeposito.class
 pe\gob\pj\depositos\infraestructure\rest\adapter\ConsultaDJController.class
 pe\gob\pj\depositos\infraestructure\db\entity\security\MaeOperacion.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDepEstado.class
 pe\gob\pj\depositos\infraestructure\rest\exceptions\CustomGlobalExceptionHandler.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MovDepositoJudicial.class
 pe\gob\pj\depositos\infraestructure\db\repository\adapter\ConsultaRepositoryAdapter.class
+pe\gob\pj\depositos\infraestructure\bd\dto\DepositoJudicialDto.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDistritoJudicial.class
 pe\gob\pj\depositos\infraestructure\security\JwtAuthorizationFilter.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecControlSecuencia.class

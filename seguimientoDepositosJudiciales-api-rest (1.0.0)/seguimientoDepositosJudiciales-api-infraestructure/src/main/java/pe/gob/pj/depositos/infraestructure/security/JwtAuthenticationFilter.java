@@ -123,7 +123,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	*/
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
-		log.error("ERROR CON LA UTORIZACION DE SPRING SECURITY: "+failed.getMessage());
+		log.error("ERROR CON LA AUTORIZACION DE SPRING SECURITY: "+failed.getMessage());
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 }

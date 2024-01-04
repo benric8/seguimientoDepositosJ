@@ -21,10 +21,13 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 import pe.gob.pj.depositos.domain.exceptions.ErrorDaoException;
 import pe.gob.pj.depositos.domain.model.sij.DepositoEstado;
+import pe.gob.pj.depositos.domain.model.sij.DepositoJudicial;
 import pe.gob.pj.depositos.domain.model.sij.DepositoJudicialDetalle;
+import pe.gob.pj.depositos.domain.model.sij.OrdenPago;
 import pe.gob.pj.depositos.domain.port.repository.ConsultaRepositoryPort;
 import pe.gob.pj.depositos.domain.utils.ProjectConstants;
 import pe.gob.pj.depositos.domain.utils.ProjectUtils;
+import pe.gob.pj.depositos.infraestructure.bd.dto.DepositoJudicialDto;
 import pe.gob.pj.depositos.infraestructure.db.entity.sij.MovDepOrdenPago;
 import pe.gob.pj.depositos.infraestructure.db.entity.sij.MovDepositoJudicial;
 
@@ -148,6 +151,57 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 	
 	public String getJNDI() throws Exception{
 		return (SessionFactoryUtils.getDataSource(sfSij)).getConnection().getMetaData().getURL();
+		
 	}
+
+	@Override
+	public List<DepositoJudicial> consultarDeposito(String cuo, String numeroExpediente) throws Exception {
+		List<DepositoJudicial> depositosJudiciales = new ArrayList<DepositoJudicial>();
+		
+		log.info("{} INICIO CONSULTA DEPOSITOS", cuo);
+		try {
+			StringBuilder stringQuery = new StringBuilder("SELECT new pe.gob.pj.depositos.infraestructure.bd.dto.DepositoJudicialDto(mdj.cDepositoJ, mrmd.xDescMotivo, mdj.cEstado, mdj.fRegistro, mdj.nSaldo) FROM MovDepositoJudicial mdj");
+			stringQuery.append(" INNER JOIN MaeRecMotivoDeposito mrmd on mdj.cMotivo = mrmd.cMotivo");
+			stringQuery.append(" where mdj.xNumExp=: "+MovDepositoJudicial.DJ_EXPEDIENTE);
+			stringQuery.append(" ORDER BY mdj.fRegistro DESC");
+			
+			TypedQuery<DepositoJudicialDto> query = this.sfSij.getCurrentSession().createQuery(stringQuery.toString(),DepositoJudicialDto.class);
+			query.setParameter(MovDepositoJudicial.DJ_EXPEDIENTE, numeroExpediente);
+			
+			query.getResultStream().forEach(depJudicial->{
+				DepositoJudicial depositoJudicial = new DepositoJudicial();
+				depositoJudicial.setCodigoDeposito(depJudicial.getCodigoDeposito());
+				depositoJudicial.setMotivoDeposito(depJudicial.getMotivoDeposito());
+				depositoJudicial.setEstado(depJudicial.getEstado());
+				depositoJudicial.setDescripcionEstado(ProjectUtils.obtenerEstadoActual(depJudicial.getEstado(),depJudicial.getNSaldo()));
+				depositoJudicial.setFechaRegistro(ProjectUtils.convertDateToString(depJudicial.getFechaRegistro(), ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
+				depositosJudiciales.add(depositoJudicial);
+	
+			});
+					
+		} catch (SQLGrammarException | IllegalArgumentException | ConstraintViolationException | DataIntegrityViolationException e) {
+			throw new ErrorDaoException(ProjectConstants.C_ERROR_EJECUCION_SENTENCIA, 
+					ProjectConstants.X_ERROR+ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL+ProjectConstants.X_ERROR_EJECUCION_SENTENCIA, 
+					getJNDI(), 
+					e.getMessage(), 
+					e.getCause());
+		}
+		
+		
+		return depositosJudiciales;
+		
+		
+		
+	}
+
+	@Override
+	public List<OrdenPago> consultarOrdenesPago(String cuo, String codigoDeposito) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
 
 }

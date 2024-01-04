@@ -15,6 +15,7 @@ D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguim
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecDependencia.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\security\JwtAuthorizationFilter.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeControlSecuencia.java
+D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecMotivoDeposito.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\security\MaeOperacion.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\security\adapter\UserDetailsServiceAdapter.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\rest\adapter\DefaultController.java
@@ -25,6 +26,7 @@ D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguim
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\security\MaeRol.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\security\MaeTipoAplicativo.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\bd\DataSourceConfig.java
+D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\bd\dto\DepositoJudicialDto.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\security\MaeUsuario.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MovDepositoJudicial.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\doc\SwaggerConfig.java

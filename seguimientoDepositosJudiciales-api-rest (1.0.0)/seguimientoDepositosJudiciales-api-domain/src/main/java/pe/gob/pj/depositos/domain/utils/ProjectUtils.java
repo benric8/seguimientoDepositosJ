@@ -692,7 +692,7 @@ public class ProjectUtils {
 	public static String obtenerEstadoActual(String codigoEstado, Double saldo){
 		
 		
-		if((codigoEstado.equals(ProjectConstants.ESTADO_DJ_C) || saldo==0 ) || codigoEstado.equals(ProjectConstants.ESTADO_DJ_E )) {
+		if(codigoEstado.equals(ProjectConstants.ESTADO_DJ_C) || saldo==0  ) {
 			return ProjectConstants.ESTADO_DJ_COMPLETO;
 		}else {
 			return ProjectConstants.ESTADO_DJ_PENDIENTE;
