@@ -1,6 +1,7 @@
 package pe.gob.pj.depositos.domain.model.sij;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class DepositoJudicial implements Serializable{
 	private String estado;
 	private String descripcionEstado;
 	private String fechaRegistro;
+	private List<DepositoEstado> depositoEstados;
 }

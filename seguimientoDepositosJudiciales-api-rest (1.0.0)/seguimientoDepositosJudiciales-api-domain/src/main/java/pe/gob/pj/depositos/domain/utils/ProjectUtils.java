@@ -618,6 +618,14 @@ public class ProjectUtils {
 			return Integer.parseInt(val.toString());
 		}
 	}
+	
+	public static Double isDouble(Object val) {
+		if (val == null) {
+			return 0.0;
+		} else {
+			return Double.parseDouble(val.toString());
+		}
+	}
 
 	public static long isLong(Object val) {
 		if (val == null) {
@@ -699,9 +707,7 @@ public class ProjectUtils {
 		}
 		
 	}
-	
-
-	
+		
 	public static String getMac() {
 		String firstInterface = null;
 		Map<String, String> addressByNetwork = new HashMap<>();

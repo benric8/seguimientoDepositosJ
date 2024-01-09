@@ -35,7 +35,7 @@ public class ProjectConstants {
 
 	public static final String DESCRIPCION_ESTADO_DJ_C = "Deposito cobrado por completo";
 	public static final String DESCRIPCION_ESTADO_DJ_D = "Depositado en banco";
-	public static final String DESCRIPCION_ESTADO_DJ_P = "Presentado por mesa de partes";
+	public static final String DESCRIPCION_ESTADO_DJ_P = "Se encuentra en la corte superior - mesa de partes";
 	public static final String DESCRIPCION_ESTADO_DJ_Q = "Deposito cobrado parcialmente";
 	public static final String DESCRIPCION_ESTADO_DJ_E = "Deposito Extornado";
 	
@@ -123,10 +123,9 @@ public class ProjectConstants {
 //	public static final String X_ERROR_RETORNADO_SP   = "Retornado por ";
 	
 	public class Proceso {
-		public static final String CONSULTA_PERSONA_RENIEC = "Consultar Persona En Reniec";
+		public static final String CONSULTA_CEJ_UNICO= "Consultar al servicio CEJ";
 		public static final String CONSULTA_DEPOSITO_JUDICIAL = "Consultar Deposito Judicial";
-		public static final String CONSULTA_EXPEDIENTE_DETALLE = "Consultar Detalle Expediente";
-		public static final String CONSULTA_EXPEDIENTE_RESOLUCION = "Consultar Resolución Expediente";
+		public static final String CONSULTA_ORDEN_PAGO = "Consultar Orden de pago";
 	}
 	
 	public class Mensajes {

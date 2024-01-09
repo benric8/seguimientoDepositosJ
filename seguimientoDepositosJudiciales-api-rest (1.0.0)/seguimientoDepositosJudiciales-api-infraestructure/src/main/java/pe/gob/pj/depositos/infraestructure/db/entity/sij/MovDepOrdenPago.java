@@ -36,6 +36,8 @@ public class MovDepOrdenPago extends Auditoria implements Serializable{
 	
 	public static final String ESTADO_OP = "estadoOrdenPago";
 
+	public static final String OP_CDEPOSITOJ = "cDepositoJ";
+
 	@Id
 	@Column(name = "\"N_MOV_DEP_ORD_PAGO\"")
 	private Integer nMovDepOrdPago;
