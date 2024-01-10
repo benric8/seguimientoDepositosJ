@@ -131,14 +131,26 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 	public List<OrdenPago> consultarOrdenesPago(String cuo, String codigoDeposito) throws Exception {
 		List<OrdenPago> ordenesPago = new ArrayList<OrdenPago>();
 		
-		log.info("{} INICIO CONSULTA DEPOSITOS", cuo); 
+		log.info("{} INICIO CONSULTA ORDENES DE PAGO", cuo); 
 		try { 
 			StringBuilder stringQuery = new StringBuilder("SELECT DISTINCT mop FROM MovDepOrdenPago mop"); 
 			stringQuery.append(" where mop.cDepositoJ =: " +MovDepOrdenPago.OP_CDEPOSITOJ);
+			stringQuery.append(" AND mop.cEstado = 'C' ");
 			stringQuery.append(" ORDER BY mop.fCobroBn DESC");
 		
 		TypedQuery<MovDepOrdenPago> query = this.sfSij.getCurrentSession().createQuery(stringQuery.toString(), MovDepOrdenPago.class);
 		query.setParameter(MovDepOrdenPago.OP_CDEPOSITOJ, codigoDeposito);
+		query.getResultStream().forEach(ordenPago -> {
+			if (ordenPago != null && ordenPago.getCDepositoJ() != null) {
+				OrdenPago ordPago = new OrdenPago();
+				ordPago.setCDepositoJ(ordenPago.getCDepositoJ());
+				ordPago.setCEstado(ordenPago.getCEstado());
+				ordPago.setCOrdenPago(ordenPago.getCOrdenPago());
+				ordPago.setFAutorizaPri(ProjectUtils.convertDateToString(ordenPago.getFAutorizaPri(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
+				ordPago.setFCobroBn(ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
+				ordenesPago.add(ordPago);
+			}
+		});
 		
 		} catch (SQLGrammarException | IllegalArgumentException |
 				ConstraintViolationException | DataIntegrityViolationException e) { throw new

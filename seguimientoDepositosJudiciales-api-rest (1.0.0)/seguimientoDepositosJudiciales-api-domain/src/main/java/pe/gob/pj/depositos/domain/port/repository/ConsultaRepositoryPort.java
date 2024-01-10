@@ -3,7 +3,6 @@ package pe.gob.pj.depositos.domain.port.repository;
 import java.util.List;
 
 import pe.gob.pj.depositos.domain.model.sij.DepositoJudicial;
-import pe.gob.pj.depositos.domain.model.sij.DepositoJudicialDetalle;
 import pe.gob.pj.depositos.domain.model.sij.OrdenPago;
 
 public interface ConsultaRepositoryPort {
