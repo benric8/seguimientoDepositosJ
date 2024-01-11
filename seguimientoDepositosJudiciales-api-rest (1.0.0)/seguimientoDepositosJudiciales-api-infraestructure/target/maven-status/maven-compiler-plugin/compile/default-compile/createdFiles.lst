@@ -1,3 +1,4 @@
+pe\gob\pj\depositos\infraestructure\client\dtos\ExpedienteDto.class
 pe\gob\pj\depositos\infraestructure\db\entity\Auditoria.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecDependencia.class
 pe\gob\pj\depositos\infraestructure\rest\request\ConsultaDepositoJudicialRequest.class
@@ -23,11 +24,15 @@ pe\gob\pj\depositos\infraestructure\db\entity\security\MaeRol.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecMotivoDeposito.class
 pe\gob\pj\depositos\infraestructure\rest\adapter\ConsultaDJController.class
 pe\gob\pj\depositos\infraestructure\db\entity\security\MaeOperacion.class
+pe\gob\pj\depositos\infraestructure\client\services\impl\ExpedienteWsServiceImpl.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDepEstado.class
+pe\gob\pj\depositos\infraestructure\rest\adapter\ConsultaExpedientesWS.class
 pe\gob\pj\depositos\infraestructure\rest\exceptions\CustomGlobalExceptionHandler.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MovDepositoJudicial.class
 pe\gob\pj\depositos\infraestructure\db\repository\adapter\ConsultaRepositoryAdapter.class
 pe\gob\pj\depositos\infraestructure\bd\dto\DepositoJudicialDto.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDistritoJudicial.class
 pe\gob\pj\depositos\infraestructure\security\JwtAuthorizationFilter.class
+pe\gob\pj\depositos\infraestructure\client\services\ExpedienteWsService.class
+pe\gob\pj\depositos\infraestructure\client\dtos\InstanciaOrganoDto.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecControlSecuencia.class

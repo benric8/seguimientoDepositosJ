@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
@@ -706,6 +707,17 @@ public class ProjectUtils {
 			return ProjectConstants.ESTADO_DJ_PENDIENTE;
 		}
 		
+	}
+	
+	public static String getClassMethodLineException(Exception e) {
+		return Optional.ofNullable(e.getStackTrace())
+                .filter(stackTrace -> stackTrace.length > 0)
+                .map(stackTrace -> stackTrace[0])
+                .map(element -> String.format("%s::%s::%d",
+                                               element.getClassName(),
+                                               element.getMethodName(),
+                                               element.getLineNumber()))
+                .orElse(ProjectConstants.X_CML_NO_IDENTIFICADA);
 	}
 		
 	public static String getMac() {

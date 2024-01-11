@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.validation.ConstraintViolationException;
 
@@ -64,9 +65,13 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 			if (depJudicial != null && depJudicial.getCDepositoJ() != null) {
 				DepositoJudicial depositoJudicial = new DepositoJudicial();
 				depositoJudicial.setCodigoDeposito(depJudicial.getCDepositoJ());
+				log.info("EXTRAEMOS EL MOTIVO DEL DEPOSITO DE LA TABLA MAE_REC_MOTIVO_DEPOSITO {}",depJudicial.getCMotivo());
 				TypedQuery<String> motivo= this.sfSij.getCurrentSession().createNamedQuery(MaeRecMotivoDeposito.FIND_MOTIVO_BY_CODIGO, String.class);
 				motivo.setParameter(MaeRecMotivoDeposito.C_MOTIVO,depJudicial.getCMotivo());
-				depositoJudicial.setMotivoDeposito(motivo.getSingleResult());					  
+				String descripcioinMotivo = motivo.getSingleResult();
+				log.info("valor recuperado {}",descripcioinMotivo);
+				depositoJudicial.setMotivoDeposito(ProjectUtils.isNullOrEmpty(descripcioinMotivo)?"":descripcioinMotivo);
+				log.info("FIN DE LA EXTRACCION DEL MOTIVO DE DEPOSITO");
 				depositoJudicial.setEstado(depJudicial.getCEstado());
 				depositoJudicial.setDescripcionEstado(ProjectUtils.obtenerEstadoActual(
 						depJudicial.getCEstado(), depJudicial.getNSaldo()));
@@ -138,19 +143,19 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 			stringQuery.append(" AND mop.cEstado = 'C' ");
 			stringQuery.append(" ORDER BY mop.fCobroBn DESC");
 		
-		TypedQuery<MovDepOrdenPago> query = this.sfSij.getCurrentSession().createQuery(stringQuery.toString(), MovDepOrdenPago.class);
-		query.setParameter(MovDepOrdenPago.OP_CDEPOSITOJ, codigoDeposito);
-		query.getResultStream().forEach(ordenPago -> {
-			if (ordenPago != null && ordenPago.getCDepositoJ() != null) {
-				OrdenPago ordPago = new OrdenPago();
-				ordPago.setCDepositoJ(ordenPago.getCDepositoJ());
-				ordPago.setCEstado(ordenPago.getCEstado());
-				ordPago.setCOrdenPago(ordenPago.getCOrdenPago());
-				ordPago.setFAutorizaPri(ProjectUtils.convertDateToString(ordenPago.getFAutorizaPri(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
-				ordPago.setFCobroBn(ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
-				ordenesPago.add(ordPago);
-			}
-		});
+			TypedQuery<MovDepOrdenPago> query = this.sfSij.getCurrentSession().createQuery(stringQuery.toString(), MovDepOrdenPago.class);
+			query.setParameter(MovDepOrdenPago.OP_CDEPOSITOJ, codigoDeposito);
+			query.getResultStream().forEach(ordenPago -> {
+				if (ordenPago != null && ordenPago.getCDepositoJ() != null) {
+					OrdenPago ordPago = new OrdenPago();
+					ordPago.setCDepositoJ(ordenPago.getCDepositoJ());
+					ordPago.setCEstado(ordenPago.getCEstado());
+					ordPago.setCOrdenPago(ordenPago.getCOrdenPago());
+					ordPago.setFAutorizaPri(ProjectUtils.convertDateToString(ordenPago.getFAutorizaPri(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
+					ordPago.setFCobroBn(ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
+					ordenesPago.add(ordPago);
+				}
+			});
 		
 		} catch (SQLGrammarException | IllegalArgumentException |
 				ConstraintViolationException | DataIntegrityViolationException e) { throw new

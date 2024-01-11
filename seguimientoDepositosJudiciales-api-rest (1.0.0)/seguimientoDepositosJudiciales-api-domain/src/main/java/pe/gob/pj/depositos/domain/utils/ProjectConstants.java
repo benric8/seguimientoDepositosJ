@@ -101,7 +101,7 @@ public class ProjectConstants {
 //	public static final String C_ERROR_OBTENER_CONFIGURACION_CORTE = "E006";
 //	public static final String C_ERROR_CONEXION_BD_SIJ   = "E007";
 //	public static final String C_ERROR_CREDENCIALES_BD_SIJ   = "E008";
-	
+	public static final String X_TRAZA_LOG ="TRAZA-LOG";
 	public static final String X_CAUSA_NO_IDENTIFICADA = "ERROR: No se puede identificar.";
 	public static final String X_EXITO = "La operación se realizo de manera exitosa.";
 	public static final String X_ERROR_NO_COINCIDENCIAS = "Datos no encontrados al ";
@@ -112,6 +112,8 @@ public class ProjectConstants {
 	public static final String X_ERROR  = "Error al ";
 	public static final String X_ERROR_EJECUCION_SENTENCIA  = " - Error al ejecutar sentencia JPA. ";
 	public static final String X_ERROR_CAPTCHA  = " - Se indica que se valide el captcha y el token captcha es nulo o no se pudo validar correctamente el captcha.";
+	public static final String X_CML_NO_IDENTIFICADA = "ERROR: No se puede identificar las CLASE-METODO-LINEA.";
+	
 //	public static final String X_ERROR_VALIDAR_PERSONA_RENIEC  = " - Los datos ingresados de la persona no se pudieron contrastar con RENIEC. ";
 //	public static final String X_ERROR_EXPEDIENTE_DETALLE  = " - El expediente no cuenta con resolución en la base de datos centralizada.";
 //	public static final String X_ERROR_EXPEDIENTE_RESOLUCION  = " - No se pudo obtener la resolución del expediente de CASILLERO.";
