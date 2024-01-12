@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 
+
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +23,7 @@ import pe.gob.pj.cliente.consulta.expedientes.ws.ResponseObtenerConfiguracionIns
 import pe.gob.pj.cliente.consulta.expedientes.ws.WSConsultaExpediente;
 import pe.gob.pj.cliente.consulta.expedientes.ws.WSConsultaExpediente_Service;
 import pe.gob.pj.cliente.consulta.expedientes.ws.handler.HeaderHandlerResolver;
+import pe.gob.pj.depositos.domain.exceptions.ErrorException;
 import pe.gob.pj.depositos.domain.utils.ProjectConstants;
 import pe.gob.pj.depositos.domain.utils.ProjectProperties;
 import pe.gob.pj.depositos.domain.utils.ProjectUtils;
@@ -57,7 +59,7 @@ public class ExpedienteWsServiceImpl implements ExpedienteWsService{
 				((BindingProvider) servicePort).getRequestContext().put("javax.xml.ws.client.receiveTimeout", "30000");
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage(),e);
+			log.error(" Error Conexion" ,e.getMessage(),e);
 			throw e;
 		}
 		return servicePort;
@@ -85,23 +87,20 @@ public class ExpedienteWsServiceImpl implements ExpedienteWsService{
 			
 			WSConsultaExpediente consultaExpServicio = abrirConexion();
 	
-			RequestListarExpedientesType lista = new RequestListarExpedientesType();
-			lista.setCodigoSistema(ProjectProperties.getInstance().getCodigoSistemaWSExpediente());
-			/*lista.setTipoConsulta(ConstantesConfiguracion.Configuracion.Propiedades.Tecnica.Servicio.WsExpediente.TIPO_CONSULTA);*/
-			lista.setTipoConsulta(ProjectProperties.getInstance().getTipoConsultaWSExpediente());
-			lista.setCodigoExpediente(nroExpediente);
-			/*
-			 * lista.setCodigoDistritoJudicial(distrito);
-			 * lista.setCodigoInstancia(instancia);
-			 * lista.setCodigoEspecialidad(especialidad); lista.setAnioExpediente(anio);
-			 * lista.setNumeroExpediente(nro);
-			 */
-			response = consultaExpServicio.listarExpedientes(getAuditoria(), lista);
+			RequestListarExpedientesType parameters = new RequestListarExpedientesType();
+			parameters.setCodigoSistema(ProjectProperties.getInstance().getCodigoSistemaWSExpediente());
+			parameters.setTipoConsulta(ProjectProperties.getInstance().getTipoConsultaWSExpediente());
+			parameters.setCodigoExpediente(nroExpediente);
+		
+			response = consultaExpServicio.listarExpedientes(getAuditoria(), parameters);
+			
 
 		}catch(Exception ex){
-			response =null;
-			ex.printStackTrace();
-			log.error(ex.getMessage(),ex);
+			/*
+			 * response =null; ex.printStackTrace(); log.error(ex.getMessage(),ex);
+			 */
+			throw new ErrorException(ProjectConstants.C_E013, ProjectConstants.X_ERROR + ProjectConstants.Proceso.CONSULTA_CEJ_UNICO + 
+					ProjectConstants.X_E013 + ProjectProperties.getInstance().getConsultaExpedienteEndpoint(),ex.getMessage(),ex);
 		}
 		return response;
 	}
@@ -120,9 +119,8 @@ public class ExpedienteWsServiceImpl implements ExpedienteWsService{
 	
 			response = consultaExpServicio.detalleExpediente(getAuditoria(), detalle);
 		}catch(Exception ex){
-			response =null;
-			ex.printStackTrace();
-			log.error(ex.getMessage(),ex);
+			throw new ErrorException(ProjectConstants.C_E013, ProjectConstants.X_ERROR + ProjectConstants.Proceso.CONSULTA_CEJ_UNICO + 
+					ProjectConstants.X_E013 + ProjectProperties.getInstance().getConsultaExpedienteEndpoint(),ex.getMessage(),ex);
 		}
 		return response;
 	}
@@ -137,9 +135,8 @@ public class ExpedienteWsServiceImpl implements ExpedienteWsService{
 			response = consultaExpServicio.obtenerConfiguracionInstanciaXDistrito(getAuditoria());
 		
 		}catch(Exception ex){
-			response =null;
-			ex.printStackTrace();
-			log.error(ex.getMessage(),ex);
+			throw new ErrorException(ProjectConstants.C_E013, ProjectConstants.X_ERROR + ProjectConstants.Proceso.CONSULTA_CEJ_UNICO + 
+					ProjectConstants.X_E013 + ProjectProperties.getInstance().getConsultaExpedienteEndpoint(),ex.getMessage(),ex);
 		}
 		
 		return response;
@@ -166,9 +163,8 @@ public class ExpedienteWsServiceImpl implements ExpedienteWsService{
 			response = consultaExpServicio.listarExpedientesSuprema(getAuditoria(), lista);	
 			
 		}catch(Exception ex){
-			response =null;
-			ex.printStackTrace();
-			log.error(ex.getMessage(),ex);
+			throw new ErrorException(ProjectConstants.C_E013, ProjectConstants.X_ERROR + ProjectConstants.Proceso.CONSULTA_CEJ_UNICO + 
+					ProjectConstants.X_E013 + ProjectProperties.getInstance().getConsultaExpedienteEndpoint(),ex.getMessage(),ex);
 		}
 		
 		
@@ -190,9 +186,8 @@ public class ExpedienteWsServiceImpl implements ExpedienteWsService{
 	
 			response = consultaExpServicio.detalleExpedienteSuprema(getAuditoria(), detalle);
 		}catch(Exception ex){
-			response =null;
-			ex.printStackTrace();
-			log.error(ex.getMessage(),ex);
+			throw new ErrorException(ProjectConstants.C_E013, ProjectConstants.X_ERROR + ProjectConstants.Proceso.CONSULTA_CEJ_UNICO + 
+					ProjectConstants.X_E013 + ProjectProperties.getInstance().getConsultaExpedienteEndpoint(),ex.getMessage(),ex);
 		}
 		return response;
 	}

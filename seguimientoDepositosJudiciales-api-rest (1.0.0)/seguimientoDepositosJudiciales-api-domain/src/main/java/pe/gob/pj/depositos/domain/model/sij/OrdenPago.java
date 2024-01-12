@@ -16,7 +16,6 @@ public class OrdenPago implements Serializable{
 	private String cOrdenPago;
 	private String nMonto;
 	private String cEstado;
-	private String fAutorizaPri;
-	private String fCobroBn;
-
+	private String fOperacion;
+	
 }

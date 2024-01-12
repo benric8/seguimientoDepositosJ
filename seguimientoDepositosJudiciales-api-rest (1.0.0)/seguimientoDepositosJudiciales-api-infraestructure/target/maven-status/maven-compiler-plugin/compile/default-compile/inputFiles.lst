@@ -6,7 +6,6 @@ D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguim
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\security\JwtAuthenticationFilter.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDepEstado.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecControlSecuencia.java
-D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\client\dtos\InstanciaOrganoDto.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDepInstitucion.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\security\SecurityConfig.java
 D:\Proyectos\ws\ws_sisdej\seguimientoDepositosJudiciales-api-rest (1.0.0)\seguimientoDepositosJudiciales-api-infraestructure\src\main\java\pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDistritoJudicial.java

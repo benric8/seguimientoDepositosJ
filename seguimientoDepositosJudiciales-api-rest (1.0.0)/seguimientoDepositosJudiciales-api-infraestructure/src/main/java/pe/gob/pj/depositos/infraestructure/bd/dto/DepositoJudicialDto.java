@@ -1,13 +1,11 @@
 package pe.gob.pj.depositos.infraestructure.bd.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.extern.log4j.Log4j2;
 import pe.gob.pj.depositos.infraestructure.db.entity.sij.MovDepOrdenPago;
 
 @AllArgsConstructor

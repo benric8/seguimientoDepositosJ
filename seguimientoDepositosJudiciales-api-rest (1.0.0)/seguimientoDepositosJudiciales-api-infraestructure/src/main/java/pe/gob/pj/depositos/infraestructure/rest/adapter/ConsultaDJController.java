@@ -72,50 +72,42 @@ public class ConsultaDJController implements Serializable {
 						log.error(
 								"{} Dstos de validación captcha -> indicador de validación: {}, token captcha: {} y la ip de la petición",
 								cuo, captcha.getAplicaCaptcha(), captcha.getTokenCaptcha(), ipRemota);
-						throw new ErrorException(ProjectConstants.C_ERROR_CAPTCHA,
+						throw new ErrorException(ProjectConstants.C_E014,
 								ProjectConstants.X_ERROR + ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL
-										+ ProjectConstants.X_ERROR_CAPTCHA);
+										+ ProjectConstants.X_E014);
 					}
 				} else {
 					log.error(
 							"{} Dstos de validación captcha -> indicador de validación: {}, token captcha: {} y la ip de la petición",
 							cuo, captcha.getAplicaCaptcha(), captcha.getTokenCaptcha(), ipRemota);
-					throw new ErrorException(ProjectConstants.C_ERROR_CAPTCHA, ProjectConstants.X_ERROR
-							+ ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL + ProjectConstants.X_ERROR_CAPTCHA);
+					throw new ErrorException(ProjectConstants.C_E014, ProjectConstants.X_ERROR
+							+ ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL + ProjectConstants.X_E014);
 				}
 			} catch (ErrorDaoException | ErrorException e) {
 				throw e;
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new ErrorException(ProjectConstants.C_ERROR_INESPERADO, ProjectConstants.X_ERROR
-						+ ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL + ProjectConstants.X_ERROR_INESPERADO,
+				throw new ErrorException(ProjectConstants.C_E000, ProjectConstants.X_ERROR
+						+ ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL + ProjectConstants.X_E000,
 						e.getMessage(), e.getCause());
 			}
 		} catch (ErrorException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			res.setCodigo(e.getCodigo());
 			res.setDescripcion(e.getDescripcion());
-			log.error("{} Error al consultar depositos judicales, Descripción: {}", cuo, e.getDescripcion());
-			log.error("{} Error al consultar depositos judicales, Detalle => ERROR: {} | CAUSA {}", cuo, e.getMessage(),
-					ProjectUtils.obtenerCausaException(e));
+			log.error("{} {} | {} | {} | {} | {} | {}", cuo, ProjectConstants.X_TRAZA_LOG, res.getCodigo(), res.getDescripcion(), ProjectUtils.getClassMethodLineException(e), e.getMessage(), ProjectUtils.obtenerCausaException(e));
 		} catch (ErrorDaoException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			res.setCodigo(e.getCodigo());
 			res.setDescripcion(e.getDescripcion());
-			log.error("{} Error al consultar depositos judicales, Descripción: {}", cuo, e.getDescripcion());
-			log.error("{} Error al consultar depositos judicales, ERROR SP: {} ERROR DB: {}", cuo,
-					e.getDescripcionErrorSP() != null ? e.getDescripcionErrorSP() : "",
-					e.getDescripcionErrorDB() != null ? e.getDescripcionErrorDB() : "");
-			log.error("{} Error al consultar depositos judicales, Detalle => ERROR: {} | CAUSA {}", cuo, e.getMessage(),
-					ProjectUtils.obtenerCausaException(e));
+			log.error("{} {} | {} | {} | {} | {} | {}", cuo, ProjectConstants.X_TRAZA_LOG, res.getCodigo(), res.getDescripcion() + e.getDescripcionErrorDB(), ProjectUtils.getClassMethodLineException(e), e.getMessage(), ProjectUtils.obtenerCausaException(e));
+			
 		} catch (Exception e) {
-			e.printStackTrace();
-			res.setCodigo(ProjectConstants.C_ERROR_INESPERADO);
+			//e.printStackTrace();
+			res.setCodigo(ProjectConstants.C_E000);
 			res.setDescripcion(ProjectConstants.X_ERROR + ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL
-					+ ProjectConstants.X_ERROR_INESPERADO);
-			log.error("{} Error al consultar depositos judicales, Descripción : {}", cuo, res.getDescripcion());
-			log.error("{} Error al consultar depositos judicales, Detalle => ERROR: {} | CAUSA {}", cuo, e.getMessage(),
-					ProjectUtils.obtenerCausaException(e));
+					+ ProjectConstants.X_E000);
+			log.error("{} {} | {} | {} | {} | {} | {}", cuo, ProjectConstants.X_TRAZA_LOG, res.getCodigo(), res.getDescripcion(), ProjectUtils.getClassMethodLineException(e), e.getMessage(), ProjectUtils.obtenerCausaException(e));
 		}
 
 		return new ResponseEntity<GlobalResponse>(res, HttpStatus.OK);
@@ -139,8 +131,8 @@ public class ConsultaDJController implements Serializable {
 			} catch (ErrorDaoException | ErrorException e){
 				throw e;
 			} catch (Exception e) {
-				throw new ErrorException(ProjectConstants.C_ERROR_INESPERADO, 
-						ProjectConstants.X_ERROR+ProjectConstants.Proceso.CONSULTA_ORDEN_PAGO+ProjectConstants.X_ERROR_INESPERADO,
+				throw new ErrorException(ProjectConstants.C_E000, 
+						ProjectConstants.X_ERROR+ProjectConstants.Proceso.CONSULTA_ORDEN_PAGO+ProjectConstants.X_E000,
 						e.getMessage(),
 						e.getCause());
 			}
@@ -156,8 +148,8 @@ public class ConsultaDJController implements Serializable {
 			log.error("{} Error al consultar ordenes de pago, ERROR SP: {} ERROR DB: {}", cuo , e.getDescripcionErrorSP()!=null?e.getDescripcionErrorSP():"", e.getDescripcionErrorDB()!=null?e.getDescripcionErrorDB():"");
 			log.error("{} Error al consultar ordenes de pago, Detalle => ERROR: {} | CAUSA {}", cuo , e.getMessage(), ProjectUtils.obtenerCausaException(e));
 		} catch (Exception e) {
-			res.setCodigo(ProjectConstants.C_ERROR_INESPERADO);
-			res.setDescripcion(ProjectConstants.X_ERROR+ProjectConstants.Proceso.CONSULTA_ORDEN_PAGO+ProjectConstants.X_ERROR_INESPERADO);
+			res.setCodigo(ProjectConstants.C_E000);
+			res.setDescripcion(ProjectConstants.X_ERROR+ProjectConstants.Proceso.CONSULTA_ORDEN_PAGO+ProjectConstants.X_E000);
 			log.error("{} Error al consultar ordenes de pago, Descripción : {}", cuo , res.getDescripcion());
 			log.error("{} Error al consultar ordenes de pago, Detalle => ERROR: {} | CAUSA {}", cuo , e.getMessage(), ProjectUtils.obtenerCausaException(e));
 		}

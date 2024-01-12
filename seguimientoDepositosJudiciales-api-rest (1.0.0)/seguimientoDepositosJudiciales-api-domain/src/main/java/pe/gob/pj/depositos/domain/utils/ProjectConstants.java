@@ -85,44 +85,35 @@ public class ProjectConstants {
 	public static final String C_403 = "403";
 	
 	public static final String C_ERROR = "E";
-	public static final String C_EXITO   = "0000";
-	public static final String C_ERROR_NO_COINCIDENCIAS   = "0001";
-	public static final String C_ERROR_INESPERADO = "E000";
-	public static final String C_ERROR_SESSION_EXPIRA = "E001";
-	public static final String C_ERROR_VALIDAR_TOKEN = "E002";
-	public static final String C_ERROR_REFRESH_TOKEN = "E003";
-	public static final String C_ERROR_EJECUCION_SENTENCIA = "E004";
-	public static final String C_ERROR_CAPTCHA= "E008";
-// 	public static final String C_ERROR_VALIDAR_PERSONA_RENIEC= "E005";
-// 	public static final String C_ERROR_EXPEDIENTE_DETALLE= "E006";
-// 	public static final String C_ERROR_EXPEDIENTE_RESOLUCION= "E007";
-//	public static final String C_ERROR_EJECUCION_SP   = "E004";
-//	public static final String C_ERROR_PJ_SEGURIDAD   = "E005";
-//	public static final String C_ERROR_OBTENER_CONFIGURACION_CORTE = "E006";
-//	public static final String C_ERROR_CONEXION_BD_SIJ   = "E007";
-//	public static final String C_ERROR_CREDENCIALES_BD_SIJ   = "E008";
-	public static final String X_TRAZA_LOG ="TRAZA-LOG";
-	public static final String X_CAUSA_NO_IDENTIFICADA = "ERROR: No se puede identificar.";
-	public static final String X_EXITO = "La operación se realizo de manera exitosa.";
-	public static final String X_ERROR_NO_COINCIDENCIAS = "Datos no encontrados al ";
-	public static final String X_ERROR_SESSION_EXPIRADO = "Los sentimos, la sesión ha expirado.";
-	public static final String X_ERROR_INESPERADO = " - Error inesperado.";
-	public static final String X_ERROR_VALIDAR_TOKEN = "Lo sentimos, hubo un problema al validar el token.";
-	public static final String X_ERROR_REFRESH_TOKEN = "Error al generar un nuevo token, el tiempo límite para refrescar el token enviado a expirado.";
-	public static final String X_ERROR  = "Error al ";
-	public static final String X_ERROR_EJECUCION_SENTENCIA  = " - Error al ejecutar sentencia JPA. ";
-	public static final String X_ERROR_CAPTCHA  = " - Se indica que se valide el captcha y el token captcha es nulo o no se pudo validar correctamente el captcha.";
-	public static final String X_CML_NO_IDENTIFICADA = "ERROR: No se puede identificar las CLASE-METODO-LINEA.";
+	public static final String C_EXITO  = "0000";
+	public static final String C_0001 = "0001";
+	public static final String C_E000 = "E000";
+	public static final String C_E001 = "E001";
+	public static final String C_E002 = "E002";
+	public static final String C_E003 = "E003";
+	public static final String C_E004 = "E004";
+	public static final String C_E005 = "E005";
+	public static final String C_E013 = "E013";
+	public static final String C_E014 = "E014";
+	public static final String C_E015 = "E015";
+
+	public static final String X_TRAZA_LOG ="TRAZA-LOG";	
+	public static final String X_CML_NOT_FOUND = "ERROR: No se puede identificar las CLASE-METODO-LINEA.";
 	
-//	public static final String X_ERROR_VALIDAR_PERSONA_RENIEC  = " - Los datos ingresados de la persona no se pudieron contrastar con RENIEC. ";
-//	public static final String X_ERROR_EXPEDIENTE_DETALLE  = " - El expediente no cuenta con resolución en la base de datos centralizada.";
-//	public static final String X_ERROR_EXPEDIENTE_RESOLUCION  = " - No se pudo obtener la resolución del expediente de CASILLERO.";
-//	public static final String X_ERROR_PJ_SEGURIDAD   = "No se estableció conexión con la BD PJ Seguridad.";
-//	public static final String X_ERROR_OBTENER_CONFIGURACION_CORTE   = "No se puede obtener datos de configuración de la BD: ";
-//	public static final String X_ERROR_EJECUCION_SP   = " - Problemas en la ejecución del SP: ";
-//	public static final String X_ERROR_CONEXION_BD_SIJ   = "- Problemas en la conexión con la BD: ";
-//	public static final String X_ERROR_CREDENCIALES_BD_SIJ   = "- Problemas con las credenciales de conexión a la corte.";
-//	public static final String X_ERROR_RETORNADO_SP   = "Retornado por ";
+	public static final String X_EXITO = "La operación se realizo de manera exitosa.";
+	public static final String X_0001 = "Datos no encontrados al ";
+	public static final String X_E000 = " - Error inesperado.";
+	public static final String X_E001 = "Lo sentimos, la sesión ha expirado.";
+	public static final String X_E002 = "Lo sentimos, hubo un problema al validar el token.";
+	public static final String X_E003 = "Error al generar un nuevo token, el tiempo límite para refrescar el token enviado a expirado.";
+	public static final String X_ERROR = "Error al ";
+	public static final String X_E004 = " - Problemas en la ejecución del SP: ";
+	public static final String X_E005 = " - No se estableció conexión con la BD PJ Seguridad.";
+	public static final String X_E013 = " - Problemas con el consumo del endpoint: ";
+	public static final String X_E014 = " - El token captcha es nulo o no es válido. ";
+	public static final String X_E015 = " - problemas en la ejecución de la sentencia JPA. ";
+	
+
 	
 	public class Proceso {
 		public static final String CONSULTA_CEJ_UNICO= "Consultar al servicio CEJ";

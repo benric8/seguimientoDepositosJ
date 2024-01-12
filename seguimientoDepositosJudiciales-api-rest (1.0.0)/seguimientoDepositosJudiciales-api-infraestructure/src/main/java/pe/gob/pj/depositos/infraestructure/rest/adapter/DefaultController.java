@@ -138,8 +138,8 @@ public class DefaultController implements Serializable{
 						res.setData(dataToken);
 						return new ResponseEntity<>(res, HttpStatus.OK);
 					}else {
-						res.setCodigo(ProjectConstants.C_ERROR_REFRESH_TOKEN);
-						res.setDescripcion(ProjectConstants.X_ERROR_REFRESH_TOKEN);
+						res.setCodigo(ProjectConstants.C_E003);
+						res.setDescripcion(ProjectConstants.X_E003);
 						return new ResponseEntity<>(res, HttpStatus.OK);
 					}				
 				} else {
@@ -182,8 +182,8 @@ public class DefaultController implements Serializable{
 						res.setData(dataToken);
 						return new ResponseEntity<>(res, HttpStatus.OK);
 					}else {
-						res.setCodigo(ProjectConstants.C_ERROR_REFRESH_TOKEN);
-						res.setDescripcion(ProjectConstants.X_ERROR_REFRESH_TOKEN);
+						res.setCodigo(ProjectConstants.C_E003);
+						res.setDescripcion(ProjectConstants.X_E003);
 						return new ResponseEntity<>(res, HttpStatus.OK);
 					}
 				} else {
@@ -195,8 +195,8 @@ public class DefaultController implements Serializable{
 				}
 			}
 		} catch (Exception e) {
-			res.setCodigo(ProjectConstants.C_ERROR_VALIDAR_TOKEN);
-			res.setDescripcion(ProjectConstants.X_ERROR_VALIDAR_TOKEN);
+			res.setCodigo(ProjectConstants.C_E002);
+			res.setDescripcion(ProjectConstants.X_E002);
 			log.error("{} error al intentar generar nuevo Token: {}", cuo, ProjectUtils.isNull(e.getCause()).concat(e.getMessage()));
 		}
 		return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);

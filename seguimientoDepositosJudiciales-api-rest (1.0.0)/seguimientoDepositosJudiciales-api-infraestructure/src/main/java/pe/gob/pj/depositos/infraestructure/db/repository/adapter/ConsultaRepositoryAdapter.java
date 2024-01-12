@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.validation.ConstraintViolationException;
 
@@ -122,10 +121,10 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 		
 		} catch (SQLGrammarException | IllegalArgumentException |
 				ConstraintViolationException | DataIntegrityViolationException e) { throw new
-			ErrorDaoException(ProjectConstants.C_ERROR_EJECUCION_SENTENCIA,
+			ErrorDaoException(ProjectConstants.C_E015,
 					ProjectConstants.X_ERROR +
 					ProjectConstants.Proceso.CONSULTA_DEPOSITO_JUDICIAL +
-					ProjectConstants.X_ERROR_EJECUCION_SENTENCIA, getJNDI(), e.getMessage(),
+					ProjectConstants.X_E015, getJNDI(), e.getMessage(),
 					e.getCause()); }
 		
 		return depositosJudiciales;
@@ -140,8 +139,8 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 		try { 
 			StringBuilder stringQuery = new StringBuilder("SELECT DISTINCT mop FROM MovDepOrdenPago mop"); 
 			stringQuery.append(" where mop.cDepositoJ =: " +MovDepOrdenPago.OP_CDEPOSITOJ);
-			stringQuery.append(" AND mop.cEstado = 'C' ");
-			stringQuery.append(" ORDER BY mop.fCobroBn DESC");
+			stringQuery.append(" AND mop.cEstado IN ('C','F','X')");
+			stringQuery.append(" ORDER BY mop.fAutorizaPri DESC");
 		
 			TypedQuery<MovDepOrdenPago> query = this.sfSij.getCurrentSession().createQuery(stringQuery.toString(), MovDepOrdenPago.class);
 			query.setParameter(MovDepOrdenPago.OP_CDEPOSITOJ, codigoDeposito);
@@ -151,18 +150,28 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 					ordPago.setCDepositoJ(ordenPago.getCDepositoJ());
 					ordPago.setCEstado(ordenPago.getCEstado());
 					ordPago.setCOrdenPago(ordenPago.getCOrdenPago());
-					ordPago.setFAutorizaPri(ProjectUtils.convertDateToString(ordenPago.getFAutorizaPri(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
-					ordPago.setFCobroBn(ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
+					
+					switch (ordPago.getCEstado()) {
+					case ProjectConstants.ESTADO_OP_C:
+						ordPago.setFOperacion(ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));				
+						break;
+					case ProjectConstants.ESTADO_OP_F:
+						ordPago.setFOperacion(ProjectUtils.convertDateToString(ordenPago.getFAutorizaPri(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));					
+						break;
+					default:
+						ordPago.setFOperacion(ProjectUtils.convertDateToString(ordenPago.getFExtornoBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));						
+						break;
+					}
 					ordenesPago.add(ordPago);
 				}
 			});
 		
 		} catch (SQLGrammarException | IllegalArgumentException |
 				ConstraintViolationException | DataIntegrityViolationException e) { throw new
-			ErrorDaoException(ProjectConstants.C_ERROR_EJECUCION_SENTENCIA,
+			ErrorDaoException(ProjectConstants.C_E015,
 					ProjectConstants.X_ERROR +
 					ProjectConstants.Proceso.CONSULTA_ORDEN_PAGO +
-					ProjectConstants.X_ERROR_EJECUCION_SENTENCIA, getJNDI(), e.getMessage(),
+					ProjectConstants.X_E015, getJNDI(), e.getMessage(),
 					e.getCause()); }
 		
 		return ordenesPago;

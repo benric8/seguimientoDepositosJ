@@ -44,7 +44,7 @@ public class ProjectUtils {
 				break;
 			
 		}
-		return causaString.trim().equalsIgnoreCase("") ? ProjectConstants.X_CAUSA_NO_IDENTIFICADA : causaString;
+		return causaString.trim().equalsIgnoreCase("") ? ProjectConstants.X_E000 : causaString;
 	}
 	
 	public static boolean isNullOrEmpty(Object valor) {
@@ -717,7 +717,7 @@ public class ProjectUtils {
                                                element.getClassName(),
                                                element.getMethodName(),
                                                element.getLineNumber()))
-                .orElse(ProjectConstants.X_CML_NO_IDENTIFICADA);
+                .orElse(ProjectConstants.X_CML_NOT_FOUND);
 	}
 		
 	public static String getMac() {

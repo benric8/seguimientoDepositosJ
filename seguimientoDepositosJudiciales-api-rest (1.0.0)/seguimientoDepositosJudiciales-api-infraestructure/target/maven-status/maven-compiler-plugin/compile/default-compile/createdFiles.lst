@@ -34,5 +34,4 @@ pe\gob\pj\depositos\infraestructure\bd\dto\DepositoJudicialDto.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeDistritoJudicial.class
 pe\gob\pj\depositos\infraestructure\security\JwtAuthorizationFilter.class
 pe\gob\pj\depositos\infraestructure\client\services\ExpedienteWsService.class
-pe\gob\pj\depositos\infraestructure\client\dtos\InstanciaOrganoDto.class
 pe\gob\pj\depositos\infraestructure\db\entity\sij\MaeRecControlSecuencia.class
