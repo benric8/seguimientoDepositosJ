@@ -51,7 +51,7 @@ public class ConsultaExpedientesWS implements Serializable{
 			ResponseListarExpedientesType responseExpediente = expedienteWS.listarExpedientes(xFormato);
 			log.info("OBTENIENDO LOS DATOS NECESARIO PARA LA CONSULTA DETALLE EXPEDIENTE DEL WSEXPEDIENTE {} ",xFormato);
 			if(responseExpediente.getMensaje()!=null&&responseExpediente.getListaExpedientes()==null) {
-				log.info("LA CONEXION CON EL METODO FUE EXITOSA PERO NO SE ENCONTRO EL EXPEDIENTE");
+				log.info("LA CONEXION CON EL METODO FUE EXITOSA PERO NO SE ENCONTRO EL EXPEDIENTE {}",responseExpediente.getMensaje().getDescripcion());
 				res.setCodigo(ProjectConstants.C_EXITO);
 				res.setDescripcion(ProjectConstants.X_EXITO);
 				res.setData(null);
@@ -81,7 +81,7 @@ public class ConsultaExpedientesWS implements Serializable{
 					res.setDescripcion(ProjectConstants.X_EXITO);
 					res.setData(expedienteEncontrado);
 				}else if (responseDetalleExpediente.getMensaje()!=null && responseDetalleExpediente.getExpedienteDetalle()==null) {
-					log.info("LA CONEXION CON EL METODO FUE EXITOSA PERO NO SE ENCONTRO DETALLE DEL EXPEDIENTE");
+					log.info("LA CONEXION CON EL METODO FUE EXITOSA PERO NO SE ENCONTRO DETALLE DEL EXPEDIENTE {}",responseDetalleExpediente.getMensaje().getDescripcion());
 					res.setCodigo(ProjectConstants.C_EXITO);
 					res.setDescripcion(ProjectConstants.X_EXITO);
 					res.setData(null);

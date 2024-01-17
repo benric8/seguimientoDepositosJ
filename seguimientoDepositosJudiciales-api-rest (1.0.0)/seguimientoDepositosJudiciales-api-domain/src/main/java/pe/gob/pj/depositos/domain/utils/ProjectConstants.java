@@ -39,6 +39,8 @@ public class ProjectConstants {
 	public static final String DESCRIPCION_ESTADO_DJ_Q = "Deposito cobrado parcialmente";
 	public static final String DESCRIPCION_ESTADO_DJ_E = "Deposito Extornado";
 	
+	public static final String DESCRIPCION_ESTADO_OP_NC = "NO COBRADA";
+	
 	public static final String PATTERN_NUMBER = "\\d+";
 	public static final String PATTERN_ALPHANUMBER = "[a-zA-Z0-9]+";
 	public static final String PATTERN_S_N = "[SN]";

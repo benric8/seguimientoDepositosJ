@@ -71,9 +71,9 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 				log.info("valor recuperado {}",descripcioinMotivo);
 				depositoJudicial.setMotivoDeposito(ProjectUtils.isNullOrEmpty(descripcioinMotivo)?"":descripcioinMotivo);
 				log.info("FIN DE LA EXTRACCION DEL MOTIVO DE DEPOSITO");
-				depositoJudicial.setEstado(depJudicial.getCEstado());
-				depositoJudicial.setDescripcionEstado(ProjectUtils.obtenerEstadoActual(
+				depositoJudicial.setEstado(ProjectUtils.obtenerEstadoActual(
 						depJudicial.getCEstado(), depJudicial.getNSaldo()));
+				
 				depositoJudicial.setFechaRegistro(ProjectUtils.convertDateToString(
 						depJudicial.getFRegistro(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));
 				
@@ -148,20 +148,10 @@ public class ConsultaRepositoryAdapter implements ConsultaRepositoryPort, Serial
 				if (ordenPago != null && ordenPago.getCDepositoJ() != null) {
 					OrdenPago ordPago = new OrdenPago();
 					ordPago.setCDepositoJ(ordenPago.getCDepositoJ());
-					ordPago.setCEstado(ordenPago.getCEstado());
-					ordPago.setCOrdenPago(ordenPago.getCOrdenPago());
-					
-					switch (ordPago.getCEstado()) {
-					case ProjectConstants.ESTADO_OP_C:
-						ordPago.setFOperacion(ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));				
-						break;
-					case ProjectConstants.ESTADO_OP_F:
-						ordPago.setFOperacion(ProjectUtils.convertDateToString(ordenPago.getFAutorizaPri(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));					
-						break;
-					default:
-						ordPago.setFOperacion(ProjectUtils.convertDateToString(ordenPago.getFExtornoBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));						
-						break;
-					}
+					ordPago.setCodigoEstado(ordenPago.getCEstado());
+					ordPago.setCOrdenPago(ordenPago.getCDepositoJ()+" - "+ordenPago.getCOrdenPago());
+					ordPago.setFechaEndoso(ProjectUtils.convertDateToString(ordenPago.getFAutorizaSec(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM));					
+					ordPago.setFechaCobro(ordenPago.getFCobroBn()!=null?ProjectUtils.convertDateToString(ordenPago.getFCobroBn(),ProjectConstants.FORMATO_FECHA_DD_MM_YYYY_HH_MM):ProjectConstants.DESCRIPCION_ESTADO_OP_NC);				
 					ordenesPago.add(ordPago);
 				}
 			});
